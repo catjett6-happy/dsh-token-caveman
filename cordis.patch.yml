@@ -1,7 +1,14 @@
 # dsh-token-caveman bundle patch layer.
 # One bundled skill (skills/caveman/SKILL.md); the skill-filesystem provider
-# collects a bundle's skills/ dir into the bundled skill root at install time.
+# resolves the packaged skill root from the installed npm identity anchored at
+# the DSH profile (Loader baseUrl), never as a path concatenated onto baseUrl.
 # No runtime tools are injected.
 - insert:
     - id: token-caveman
       name: 'dsh-token-caveman'
+    - id: token-caveman-skill-filesystem
+      name: '@deepseek-ai/dsh-skill-filesystem'
+      config:
+        providerName: token-caveman
+        includeDefaultRoots: false
+        bundledSkillDir: !!js process.getBuiltinModule('node:path').join(process.getBuiltinModule('node:path').dirname(process.getBuiltinModule('node:module').createRequire(baseUrl).resolve('dsh-token-caveman/package.json')), 'skills')

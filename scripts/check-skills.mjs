@@ -32,7 +32,7 @@ for (const dir of dirs) {
   const problems = []
   try {
     const raw = await readFile(file, 'utf8')
-    const fm = /^---\n([\s\S]*?)\n---/.exec(raw)
+    const fm = /^---\r?\n([\s\S]*?)\r?\n---/.exec(raw)
     if (!fm) {
       problems.push('missing YAML frontmatter')
     } else {
